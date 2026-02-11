@@ -1,0 +1,316 @@
+\documentclass[t,aspectratio=169]{beamer}
+
+% --- Theme and Color Setup ---
+\usetheme{Madrid}
+
+% --- Green palette ---
+\definecolor{MyGreen}{RGB}{0,104,55}
+\definecolor{MyGreenDark}{RGB}{0,78,41}
+\definecolor{MyGreenMid}{RGB}{0,92,48}
+
+\usecolortheme[named=MyGreen]{structure}
+
+% Footer and header colors
+\setbeamercolor{palette primary}{bg=MyGreen,fg=white}
+\setbeamercolor{palette secondary}{bg=MyGreenDark,fg=white}
+\setbeamercolor{palette tertiary}{bg=MyGreenMid,fg=white}
+\setbeamercolor{frametitle}{bg=MyGreen,fg=white}
+\setbeamercolor{title}{fg=white}
+\setbeamerfont{caption}{size=\footnotesize}
+\setbeamerfont{author in head/foot}{size=\scriptsize}
+\setbeamerfont{title in head/foot}{size=\scriptsize}
+\setbeamerfont{date in head/foot}{size=\scriptsize}
+
+% Taller footer bar for extra padding
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.34\paperwidth,ht=3.2ex,dp=1.4ex,center]{author in head/foot}
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.33\paperwidth,ht=3.2ex,dp=1.4ex,center]{title in head/foot}
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.33\paperwidth,ht=3.2ex,dp=1.4ex,center]{date in head/foot}
+    \usebeamerfont{date in head/foot}\insertframenumber/\inserttotalframenumber
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{array}
+
+% --- Listings style ---
+\lstdefinestyle{code}{
+  basicstyle=\ttfamily\small,
+  columns=fullflexible,
+  frame=single,
+  rulecolor=\color{black!20},
+  framerule=0.6pt,
+  xleftmargin=0.5em,
+  xrightmargin=0.5em,
+  aboveskip=0.7em,
+  belowskip=0.7em,
+  showstringspaces=false
+}
+
+% --- 1. CONFIGURATION FOR CONTENT SLIDES ---
+% Put a white logo in the top right corner of every normal slide title bar
+% Replace the filename with the UniBo white logo you download
+\addtobeamertemplate{frametitle}{}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=north east, xshift=-0.3cm, yshift=-0.05cm, inner sep=0pt] at (current page.north east) {
+            \includegraphics[height=0.9cm, keepaspectratio]{../logo2.jpg}
+        };
+    \end{tikzpicture}%
+}
+
+% --- 2. CONFIGURATION FOR FIRST PAGE ---
+\newcommand{\FirstPageLayout}{
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=north east, xshift=-0.3cm, yshift=-0.05cm, inner sep=0pt] at (current page.north east) {
+            \includegraphics[height=1.4cm, keepaspectratio]{../logo.png}
+        };
+        \node[anchor=south west, xshift=0.5cm, yshift=0.5cm] at (current page.south west) {
+            \textcolor{MyGreen}{\footnotesize University of Bologna}
+        };
+    \end{tikzpicture}
+}
+
+% --- 3. CONFIGURATION FOR LAST PAGE ---
+\newcommand{\LastPageLayout}{
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=north east, xshift=-0.3cm, yshift=-0.05cm, inner sep=0pt] at (current page.north east) {
+            \includegraphics[height=0.9cm, keepaspectratio]{../logo.png}
+        };
+        \node[anchor=south west, xshift=0.5cm, yshift=0.5cm] at (current page.south west) {
+            \textcolor{MyGreen}{\footnotesize University of Bologna}
+        };
+    \end{tikzpicture}
+}
+
+% --- Info ---
+\title[SVS]{Smart Vehicular System}
+\subtitle{Lab 1}
+\author[Andrea Bedei, Lorenzo Bacchiani]{Andrea Bedei \\ Lorenzo Bacchiani}
+\institute[]{University of Bologna}
+\date{}
+
+\begin{document}
+
+% --- Slide 1: Title Page ---
+\begin{frame}
+    \FirstPageLayout
+    \titlepage
+\end{frame}
+
+% --- Slide 2: Index ---
+\begin{frame}[t]{Index}
+  \small
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}{Introduction}
+\begin{itemize}
+  \item Open source simulator designed for research on driving scenarios
+  \item Realistic virtual world to test vehicles with controlled weather, lighting, and traffic
+  \item Supports training, testing, and validation while reducing costs and risks compared to on road experiments
+\end{itemize}
+\end{frame}
+
+\section{Why CARLA}
+
+\begin{frame}{Why choose CARLA}
+\begin{itemize}
+  \item Safe experimentation with complex scenarios without endangering people or hardware
+  \item Open source platform with code and protocols available on GitHub
+  \item Open digital assets (urban layouts, buildings, vehicles) available for reuse
+  \item Multi sensor setup with cameras, LiDAR, radar, GNSS, and other modalities for perception and planning pipelines
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why choose CARLA}
+\begin{itemize}
+  \item Widely adopted by industry and academia with many published baselines and example projects
+  \item Active community with extensive documentation and shared troubleshooting resources
+  \item Native ROS 2 interface and ROS bridge for ROS 1 and ROS 2 integration
+\end{itemize}
+\end{frame}
+
+\section{Requirements}
+
+\begin{frame}{CARLA requirements (summary)}
+\rowcolors{2}{black!3}{white}
+
+\setlength{\tabcolsep}{7pt}
+\renewcommand{\arraystretch}{1.15}
+
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.6cm} X@{}}
+\rowcolor{MyGreen}
+\textcolor{white}{\textbf{Area}} & \textcolor{white}{\textbf{Requirement}} \\
+Supported systems & Windows or Linux (64 bit) \\
+GPU & Dedicated GPU with at least 6 GB VRAM, 8 GB recommended \\
+Disk space & About 20 GB for the packaged simulator \\
+Python & Python 3 with pip 20.3+; pygame and numpy for quick start \\
+Network & Two TCP ports available, 2000 and 2001 by default \\
+\end{tabularx}
+\end{frame}
+
+\begin{frame}{Operational constraints}
+\begin{itemize}
+  \item Setup can be demanding and benefits from familiarity with Python and simulator configuration
+  \item Simulation is an approximation of reality, so traffic and pedestrian behavior can differ from real urban dynamics
+  \item Official support focuses on Linux and Windows, with limited support for other platforms and architectures
+\end{itemize}
+\end{frame}
+
+\section{Installation}
+
+\begin{frame}{Get the simulator binaries}
+Follow the official quick start and installation guide, then download the simulator binaries.
+
+\begin{itemize}
+  \item GitHub releases: \url{https://github.com/carla-simulator/carla/releases}
+  \item Campus file share via SMB using Windows Explorer
+\end{itemize}
+
+\medskip
+\textbf{SMB access from Windows Explorer}
+
+Type the following path in the Explorer address bar:
+\begin{center}
+\ttfamily\Large \textbackslash\textbackslash137.204.72.11
+\end{center}
+
+Use these credentials when prompted:
+\begin{itemize}
+  \item Username \texttt{sambauser}
+  \item Password \texttt{simcar}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Run the simulator}
+\begin{itemize}
+  \item After extracting the package, start CARLA via the graphical launcher or the server executable
+  \item Typical workflow: download CARLA, set up the Python client, then run the example scripts once the server is running
+  \item Keep the default networking ports available and ensure the firewall does not block the connection
+\end{itemize}
+\end{frame}
+
+\section{Python environment}
+
+\begin{frame}[fragile]{Python environment setup}
+Use a Python environment manager (conda or venv) to keep dependencies isolated.
+
+\textbf{Create a conda environment}
+\begin{lstlisting}[style=code,language=bash]
+conda create -n carla-env python=3.7
+conda activate carla-env
+python --version  # Python 3.7.x
+\end{lstlisting}
+
+\textbf{Install dependencies and the CARLA Python package}
+\begin{lstlisting}[style=code,language=bash]
+pip install -r PythonAPI/examples/requirements.txt
+pip install carla
+\end{lstlisting}
+\end{frame}
+
+\section{Exercises}
+
+\begin{frame}[fragile]{Exercise 1: tutorial.py}
+\textbf{Prerequisite: CARLA server must be running.}
+\begin{lstlisting}[style=code,language=bash]
+cd Code/examples
+python tutorial.py
+\end{lstlisting}
+\begin{itemize}
+  \item Connects to the server and spawns a vehicle
+  \item Enables autopilot and attaches a depth camera
+  \item Saves images in \texttt{\_out/}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 2: manual\_control.py}
+\textbf{Prerequisite: CARLA server must be running.}
+\begin{lstlisting}[style=code,language=bash]
+cd Code/examples
+python manual_control.py
+\end{lstlisting}
+\begin{itemize}
+  \item Keyboard driving with HUD (demo live)
+  \item Main keys: \texttt{WASD}, \texttt{P} (autopilot), \texttt{H} (help)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 3: dynamic\_weather.py}
+\textbf{Prerequisite: CARLA server must be running.}
+\begin{lstlisting}[style=code,language=bash]
+cd Code/examples
+python dynamic_weather.py
+\end{lstlisting}
+\begin{itemize}
+  \item Changes sun position and weather over time
+  \item Clear visual feedback for lighting and rain
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Exercise 4: generate\_traffic.py}
+\textbf{Prerequisite: CARLA server must be running.}
+\begin{lstlisting}[style=code,language=bash]
+cd Code/examples
+python generate_traffic.py
+\end{lstlisting}
+\begin{itemize}
+  \item Spawns vehicles and pedestrians automatically
+  \item Options: \texttt{--number-of-vehicles} and \texttt{--number-of-walkers}
+\end{itemize}
+\end{frame}
+
+\section{Python API}
+
+\begin{frame}[fragile]{Python API quick connection}
+\begin{lstlisting}[style=code,language=Python]
+import carla
+
+# Connect to the server
+client = carla.Client('localhost', 2000)
+world = client.get_world()
+\end{lstlisting}
+\end{frame}
+
+\section{References}
+
+\begin{frame}{References}
+\small
+\begin{enumerate}
+  \item A Dosovitskiy, G Ros, F Codevilla, A Lopez, V Koltun. CARLA: An Open Urban Driving Simulator. Proceedings of the First Annual Conference on Robot Learning, 2017.
+  \item CARLA documentation, version 0.9.15. \url{https://carla.readthedocs.io/en/0.9.15/}
+  \item CARLA GitHub repository. \url{https://github.com/carla-simulator/carla}
+  \item ROS website. \url{https://www.ros.org}
+\end{enumerate}
+\end{frame}
+
+% --- Final page ---
+\begin{frame}[c]
+    \LastPageLayout
+    \centering
+    \Huge \textcolor{MyGreen}{Thank you for your attention}
+
+    \vspace{1.2cm}
+    \normalsize
+    \textbf{Andrea Bedei} \\[0.2cm]
+    \textbf{Lorenzo Bacchiani}
+\end{frame}
+
+\end{document}

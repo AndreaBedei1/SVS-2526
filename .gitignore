@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+*.nav
+*.snm
+*.gz
+*.vrb
+
 # Distribution / packaging
 .Python
 build/
