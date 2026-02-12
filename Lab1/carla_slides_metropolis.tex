@@ -164,6 +164,10 @@ Disk space & About 20 GB for the packaged simulator \\
 Python & Python 3 with pip 20.3+; pygame and numpy for quick start \\
 Network & Two TCP ports available, 2000 and 2001 by default \\
 \end{tabularx}
+
+\medskip
+\footnotesize
+Note: CARLA can also run with a discrete GPU (not integrated) with at least 4 GB VRAM and sufficient system RAM (16 GB+).
 \end{frame}
 
 \begin{frame}{Operational constraints}
@@ -177,25 +181,18 @@ Network & Two TCP ports available, 2000 and 2001 by default \\
 \section{Installation}
 
 \begin{frame}{Get the simulator binaries}
-Follow the official quick start and installation guide, then download the simulator binaries.
-
+If you want to use your own PC, download CARLA 0.9.15 from the official site:
 \begin{itemize}
   \item GitHub releases: \url{https://github.com/carla-simulator/carla/releases}
-  \item Campus file share via SMB using Windows Explorer
 \end{itemize}
 
 \medskip
-\textbf{SMB access from Windows Explorer}
-
-Type the following path in the Explorer address bar:
-\begin{center}
-\ttfamily\Large \textbackslash\textbackslash137.204.72.11
-\end{center}
-
-Use these credentials when prompted:
+If you use the lab PCs, CARLA is already available. Follow these steps:
 \begin{itemize}
-  \item Username \texttt{sambauser}
-  \item Password \texttt{simcar}
+  \item Open File Explorer
+  \item Go to This PC
+  \item Open Local Disk (C:)
+  \item Enter the \texttt{Carla\_0.9.15} folder
 \end{itemize}
 \end{frame}
 
